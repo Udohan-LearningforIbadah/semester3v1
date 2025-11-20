@@ -1,0 +1,2 @@
+Filament need "npm run dev"
+then adding "filament()," into "vite.config.js" inside "plugins: []"
