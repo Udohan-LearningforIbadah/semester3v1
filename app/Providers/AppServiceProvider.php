@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Events\Authenticated;
+use Illuminate\Support\Facades\Event;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen(Authenticated::class, function ($event) {
+            $user = $event->user;
+
+            if (!$user->is_admin && request()->is('user/login')) {
+                redirect('/dashboard')->send();
+            }
+        });
     }
 }

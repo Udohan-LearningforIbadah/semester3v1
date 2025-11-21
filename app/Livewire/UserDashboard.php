@@ -2,13 +2,15 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class UserDashboard extends Component
 {
     public $currentMonth;
     public $currentYear;
+
+    protected string $layout = 'components.layouts.app';
 
     public function render()
     {
