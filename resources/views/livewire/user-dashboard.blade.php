@@ -1,4 +1,5 @@
 <div class="max-w-5xl mx-auto p-6">
+    <livewire:logout-button />
 
     <div class="flex justify-between items-center mb-6">
         <button wire:click="prevMonth" class="px-4 py-2 bg-gray-200 rounded">‹ Prev</button>

@@ -13,7 +13,7 @@ class AdminCheck
     {
         $user = Auth::user();
 
-        if (!$user?->is_admin) {
+        if ($user?->role !== 'admin') {
             return redirect('/dashboard'); // normal user → livewire dashboard
         }
         return $next($request);

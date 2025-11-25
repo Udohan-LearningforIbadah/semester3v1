@@ -10,3 +10,5 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', UserDashboard::class)->name('dashboard');
 });
+
+Route::redirect('/login', '/admin/login')->name('login');
