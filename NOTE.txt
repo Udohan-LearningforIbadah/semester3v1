@@ -1,2 +1,9 @@
 Filament need "npm run dev"
 then adding "filament()," into "vite.config.js" inside "plugins: []"
+
+resources/views/livewire/
+├── user-dashboard.blade.php          # Main layout
+├── partials/
+│   ├── dashboard-sidebar.blade.php   # Left sidebar
+│   ├── task-management.blade.php     # Middle task panel
+│   └── calendar-panel.blade.php      # Right calendar panel

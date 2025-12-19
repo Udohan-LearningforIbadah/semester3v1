@@ -1,0 +1,159 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-indigo-600">{{ config('app.name', 'Laravel') }}</h1>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    @if($isLoggedIn)
+                        <!-- User dropdown for logged-in users -->
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center space-x-2 text-gray-700 hover:text-indigo-600 focus:outline-none">
+                                <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
+                                    <span class="text-indigo-600 font-semibold">
+                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                    </span>
+                                </div>
+                                <span class="hidden md:inline">{{ $user->name }}</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            
+                            <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                                <a href="{{ filament()->getUrl() }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
+                                    Dashboard
+                                </a>
+                                <button wire:click="logout" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">
+                                    Sign Out
+                                </button>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Guest navigation - Only Login button -->
+                        <div class="flex items-center space-x-4">
+                            <a href="{{ filament()->getUrl() }}" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300">
+                                Login
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        @if($isLoggedIn)
+            <!-- Welcome back message for logged-in users -->
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                    Welcome back, {{ $user->name }}! 👋
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    We're glad to see you again. Ready to continue where you left off?
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="{{ filament()->getUrl() }}" 
+                       class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 text-lg font-semibold shadow-lg">
+                        Go to Dashboard
+                    </a>
+                    <button wire:click="logout" 
+                            class="border border-indigo-600 text-indigo-600 px-8 py-3 rounded-lg hover:bg-indigo-50 transition duration-300 text-lg font-semibold">
+                        Sign Out
+                    </button>
+                </div>
+                
+                <!-- Quick stats or recent activity (customize based on your app) -->
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-3xl font-bold text-indigo-600 mb-2">📊</div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Dashboard</h3>
+                        <p class="text-gray-600">Access your personalized dashboard with all your data and tools.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-3xl font-bold text-indigo-600 mb-2">⚙️</div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Settings</h3>
+                        <p class="text-gray-600">Manage your profile, preferences, and account settings.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-3xl font-bold text-indigo-600 mb-2">📈</div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Analytics</h3>
+                        <p class="text-gray-600">View your performance metrics and growth analytics.</p>
+                    </div>
+                </div>
+            </div>
+        @else
+            <!-- Hero content for guests -->
+            <div class="text-center">
+                <h1 class="text-5xl font-bold text-gray-900 mb-6">
+                    Welcome to {{ config('app.name', 'Our Platform') }}
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    A powerful platform built with Laravel and Filament. Join our community of users who are already enjoying our services.
+                </p>
+                
+                <div class="flex justify-center space-x-4 mb-16">
+                    <!-- Commented out registration button -->
+                    {{-- 
+                    <a href="{{ route('register') }}" 
+                       class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 text-lg font-semibold shadow-lg transform hover:scale-105">
+                        Get Started Free
+                    </a>
+                    --}}
+                    
+                    <a href="{{ filament()->getUrl() }}" 
+                       class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition duration-300 text-lg font-semibold shadow-lg transform hover:scale-105">
+                        Sign In
+                    </a>
+                </div>
+
+                <!-- Features Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="text-4xl mb-4">🚀</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Fast & Powerful</h3>
+                        <p class="text-gray-600">Built with the latest Laravel and Livewire technologies for maximum performance.</p>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="text-4xl mb-4">🛡️</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Secure & Reliable</h3>
+                        <p class="text-gray-600">Enterprise-grade security with Filament's robust authentication system.</p>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                        <div class="text-4xl mb-4">💼</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Professional Dashboard</h3>
+                        <p class="text-gray-600">Beautiful, intuitive admin panel for managing your data efficiently.</p>
+                    </div>
+                </div>
+
+                <!-- Call to Action - Updated without registration -->
+                <div class="mt-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-8 text-white">
+                    <h2 class="text-3xl font-bold mb-4">Ready to get started?</h2>
+                    <p class="text-xl mb-6">Sign in to access your dashboard and start managing your account.</p>
+                    <a href="{{ filament()->getUrl() }}" 
+                       class="bg-white text-indigo-600 px-8 py-3 rounded-lg hover:bg-gray-100 transition duration-300 text-lg font-semibold inline-block">
+                        Sign In Now
+                    </a>
+                </div>
+            </div>
+        @endif
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center text-gray-600">
+                <p>&copy; {{ date('Y') }} {{ config('app.name', 'Laravel Application') }}. All rights reserved.</p>
+                <p class="mt-2 text-sm">Built with Laravel, Livewire, and Filament</p>
+            </div>
+        </div>
+    </footer>
+</div>
