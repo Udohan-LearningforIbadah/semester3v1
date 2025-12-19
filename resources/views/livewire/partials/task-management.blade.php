@@ -1,4 +1,37 @@
 <div class="{{ $darkMode ? 'bg-gray-800' : 'bg-white' }} rounded-xl border {{ $darkMode ? 'border-gray-700' : 'border-gray-200' }} shadow-sm">
+    <!-- Motivational Quran & Hadith Panel -->
+    <div class="{{ $darkMode ? 'bg-gradient-to-r from-green-900/20 to-emerald-900/20 border-green-800/30' : 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-100' }} border-b rounded-t-xl p-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="h-10 w-10 rounded-lg {{ $darkMode ? 'bg-green-900/30 border border-green-800/50' : 'bg-green-100 border border-green-200' }} flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 {{ $darkMode ? 'text-green-400' : 'text-green-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold {{ $darkMode ? 'text-green-300' : 'text-green-800' }}">Daily Inspiration</h3>
+                    <p class="text-xs {{ $darkMode ? 'text-green-400/80' : 'text-green-600' }}">Random Quran & Hadith</p>
+                </div>
+            </div>
+            <button onclick="refreshMotivation()" 
+                    class="p-1.5 {{ $darkMode ? 'text-green-400 hover:text-green-300 hover:bg-green-900/30' : 'text-green-600 hover:text-green-700 hover:bg-green-100' }} rounded-lg transition duration-300">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Motivation Content -->
+        <div id="motivation-content" class="mt-4">
+            <div class="text-center py-8">
+                <svg class="w-8 h-8 mx-auto {{ $darkMode ? 'text-green-500/50' : 'text-green-400' }} mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="{{ $darkMode ? 'text-green-300' : 'text-green-700' }} italic">Loading inspiration...</p>
+            </div>
+        </div>
+    </div>
+
     <!-- To-Do Header -->
     <div class="p-6 border-b {{ $darkMode ? 'border-gray-700' : 'border-gray-200' }}">
         <div class="flex justify-between items-center">
@@ -128,3 +161,175 @@
         </div>
     </div>
 </div>
+
+<!-- JavaScript for Motivational Panel -->
+<script>
+// Collection of Quranic verses and Hadiths
+const motivations = [
+    {
+        type: 'quran',
+        arabic: 'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا',
+        translation: 'For indeed, with hardship [will be] ease.',
+        reference: 'Quran 94:5',
+        theme: 'patience'
+    },
+    {
+        type: 'quran',
+        arabic: 'وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَى',
+        translation: 'And your Lord is going to give you, and you will be satisfied.',
+        reference: 'Quran 93:5',
+        theme: 'hope'
+    },
+    {
+        type: 'quran',
+        arabic: 'إِنَّ اللَّهَ مَعَ الصَّابِرِينَ',
+        translation: 'Indeed, Allah is with the patient.',
+        reference: 'Quran 2:153',
+        theme: 'patience'
+    },
+    {
+        type: 'quran',
+        arabic: 'وَقُلِ اعْمَلُوا فَسَيَرَى اللَّهُ عَمَلَكُمْ',
+        translation: 'And say, "Do [as you will], for Allah will see your deeds."',
+        reference: 'Quran 9:105',
+        theme: 'diligence'
+    },
+    {
+        type: 'hadith',
+        arabic: 'احْرِصْ عَلَى مَا يَنْفَعُكَ وَاسْتَعِنْ بِاللَّهِ',
+        translation: 'Be keen on what benefits you, and seek help from Allah.',
+        reference: 'Sahih Muslim',
+        theme: 'effort'
+    },
+    {
+        type: 'hadith',
+        arabic: 'إِنَّ اللَّهَ يُحِبُّ إِذَا عَمِلَ أَحَدُكُمْ عَمَلاً أَنْ يُتْقِنَهُ',
+        translation: 'Allah loves that when one of you does a job, he does it perfectly.',
+        reference: 'Al-Bayhaqi',
+        theme: 'excellence'
+    },
+    {
+        type: 'quran',
+        arabic: 'وَالَّذِينَ جَاهَدُوا فِينَا لَنَهْدِيَنَّهُمْ سُبُلَنَا',
+        translation: 'And those who strive for Us - We will surely guide them to Our ways.',
+        reference: 'Quran 29:69',
+        theme: 'striving'
+    },
+    {
+        type: 'hadith',
+        arabic: 'الْمُؤْمِنُ الْقَوِيُّ خَيْرٌ وَأَحَبُّ إِلَى اللَّهِ مِنَ الْمُؤْمِنِ الضَّعِيفِ',
+        translation: 'The strong believer is better and more beloved to Allah than the weak believer.',
+        reference: 'Sahih Muslim',
+        theme: 'strength'
+    },
+    {
+        type: 'quran',
+        arabic: 'إِنَّمَا يُوَفَّى الصَّابِرُونَ أَجْرَهُمْ بِغَيْرِ حِسَابٍ',
+        translation: 'Indeed, the patient will be given their reward without account.',
+        reference: 'Quran 39:10',
+        theme: 'reward'
+    },
+    {
+        type: 'hadith',
+        arabic: 'تَدَاوَوْا عِبَادَ اللَّهِ فَإِنَّ اللَّهَ لَمْ يَضَعْ دَاءً إِلَّا وَضَعَ لَهُ شِفَاءً',
+        translation: 'Seek treatment, O servants of Allah, for Allah did not create a disease without creating a cure for it.',
+        reference: 'Sunan Ibn Majah',
+        theme: 'healing'
+    },
+    {
+        type: 'quran',
+        arabic: 'وَقُل رَّبِّ زِدْنِي عِلْمًا',
+        translation: 'And say, "My Lord, increase me in knowledge."',
+        reference: 'Quran 20:114',
+        theme: 'knowledge'
+    },
+    {
+        type: 'hadith',
+        arabic: 'الْكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ',
+        translation: 'A good word is charity.',
+        reference: 'Sahih Bukhari',
+        theme: 'kindness'
+    }
+];
+
+// Function to get a random motivation
+function getRandomMotivation() {
+    const randomIndex = Math.floor(Math.random() * motivations.length);
+    return motivations[randomIndex];
+}
+
+// Function to display motivation
+function displayMotivation(motivation) {
+    const contentDiv = document.getElementById('motivation-content');
+    
+    let icon = '';
+    let colorClass = '';
+    
+    if (motivation.type === 'quran') {
+        icon = `<svg class="w-6 h-6 ${colorClass} mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>`;
+        colorClass = 'text-green-500';
+    } else {
+        icon = `<svg class="w-6 h-6 ${colorClass} mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>`;
+        colorClass = 'text-blue-500';
+    }
+    
+    contentDiv.innerHTML = `
+        <div class="text-center">
+            ${icon}
+            <div class="text-2xl font-arabic mb-4 ${colorClass} leading-relaxed" dir="rtl">
+                ${motivation.arabic}
+            </div>
+            <div class="text-sm ${colorClass.replace('text-', 'text-').replace('500', '400')} mb-2">
+                ${motivation.reference}
+            </div>
+            <p class="text-sm ${colorClass} italic mb-3">
+                "${motivation.translation}"
+            </p>
+            <div class="inline-block px-3 py-1 text-xs ${colorClass.replace('text-', 'bg-').replace('500', '100')} ${colorClass} rounded-full">
+                ${motivation.type === 'quran' ? 'Quran' : 'Hadith'} • ${motivation.theme.charAt(0).toUpperCase() + motivation.theme.slice(1)}
+            </div>
+        </div>
+    `;
+}
+
+// Function to refresh motivation
+function refreshMotivation() {
+    const motivation = getRandomMotivation();
+    displayMotivation(motivation);
+    
+    // Add refresh animation
+    const contentDiv = document.getElementById('motivation-content');
+    contentDiv.classList.add('opacity-50');
+    setTimeout(() => {
+        contentDiv.classList.remove('opacity-50');
+    }, 300);
+}
+
+// Function to auto-refresh every 5 minutes
+function startAutoRefresh() {
+    setInterval(refreshMotivation, 5 * 60 * 1000); // 5 minutes
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Load initial motivation
+    refreshMotivation();
+    
+    // Start auto-refresh
+    startAutoRefresh();
+    
+    // Add Arabic font support
+    const style = document.createElement('style');
+    style.textContent = `
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+        .font-arabic {
+            font-family: 'Amiri', serif;
+        }
+    `;
+    document.head.appendChild(style);
+});
+</script>
